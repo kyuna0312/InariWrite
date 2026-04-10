@@ -15,7 +15,7 @@
   "dependencies": {
     "@inariwrite/core": "workspace:*",
     "@inariwrite/plugin-sample": "workspace:*",
-    "cac": "^6.7.14"
+    "cac": "^7.0.0"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",
