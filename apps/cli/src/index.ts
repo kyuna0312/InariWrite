@@ -1,5 +1,9 @@
 #!/usr/bin/env node
 import { markdownToHtmlDocument } from "@inariwrite/core";
+import type { MarkdownPlugin } from "@inariwrite/core";
+import { sampleMarkdownPlugin } from "@inariwrite/plugin-sample";
+import { checkMarkdownRelativeLinks, formatCheckReport } from "./check.js";
+import { resolveCliMarkdownPlugins } from "./loadPlugins.js";
 import { mkdirSync, readFileSync, statSync, watch, writeFileSync } from "node:fs";
 import type { ServerResponse } from "node:http";
 import { createServer } from "node:http";
@@ -50,6 +54,31 @@ function injectPreviewWatchScript(
 
 const cli = cac("inariwrite");
 
+/** Same default plugins as the web preview (worker + fallback). */
+const defaultMarkdownPlugins = [sampleMarkdownPlugin];
+
+function exitErr(message: string): never {
+  process.stderr.write(`${message}\n`);
+  process.exit(1);
+}
+
+async function loadPluginsOrExit(opts: {
+  config?: string;
+  plugin?: string;
+}): Promise<MarkdownPlugin[]> {
+  try {
+    return await resolveCliMarkdownPlugins({
+      cwd: process.cwd(),
+      base: defaultMarkdownPlugins,
+      config: opts.config,
+      pluginSpecs: opts.plugin,
+    });
+  } catch (e) {
+    const msg = e instanceof Error ? e.message : String(e);
+    exitErr(`Error loading plugins: ${msg}`);
+  }
+}
+
 cli.version(readVersion());
 
 cli
@@ -62,6 +91,11 @@ cli
     "Polling interval (ms) when EventSource is unavailable; min 100, max 60000",
     { default: 500 },
   )
+  .option("-c, --config <file>", "Path to inariwrite.config.{mjs,js,cjs}")
+  .option(
+    "--plugin <specs>",
+    "Comma-separated MarkdownPlugin modules (npm package or ./file.mjs), after config",
+  )
   .action(
     async (
       file: string,
@@ -70,8 +104,14 @@ cli
         host?: string;
         watch?: boolean;
         interval?: string | number;
+        config?: string;
+        plugin?: string;
       },
     ) => {
+      const plugins = await loadPluginsOrExit({
+        config: options.config,
+        plugin: options.plugin,
+      });
       const filePath = resolve(process.cwd(), file);
       const title = basename(filePath);
       const port = Number(options.port ?? 4173);
@@ -170,7 +210,10 @@ cli
 
           try {
             const md = readFileSync(filePath, "utf8");
-            let html = await markdownToHtmlDocument(md, { title });
+            let html = await markdownToHtmlDocument(md, {
+              title,
+              plugins,
+            });
             if (watchMode) {
               html = injectPreviewWatchScript(html, pollIntervalMs, fsWatchOk);
             }
@@ -198,14 +241,50 @@ cli
   );
 
 cli
+  .command("check <file>", "Verify relative .md / .markdown links from a Markdown file")
+  .option("-c, --config <file>", "Path to inariwrite.config.{mjs,js,cjs}")
+  .option(
+    "--plugin <specs>",
+    "Comma-separated MarkdownPlugin modules (npm package or ./file.mjs), after config",
+  )
+  .action(async (file: string, options: { config?: string; plugin?: string }) => {
+    const plugins = await loadPluginsOrExit({
+      config: options.config,
+      plugin: options.plugin,
+    });
+    const filePath = resolve(process.cwd(), file);
+    const { broken } = checkMarkdownRelativeLinks(filePath, plugins);
+    if (broken.length === 0) {
+      process.stderr.write("OK: no broken relative Markdown links.\n");
+      process.exit(0);
+      return;
+    }
+    const report = formatCheckReport(filePath, { broken });
+    process.stderr.write(`${report}\n`);
+    process.exit(1);
+  });
+
+cli
   .command("build <file>", "Write index.html from a Markdown file")
   .option("-o, --out <dir>", "Output directory", { default: "dist-md" })
-  .action(async (file: string, options: { out?: string }) => {
+  .option("-c, --config <file>", "Path to inariwrite.config.{mjs,js,cjs}")
+  .option(
+    "--plugin <specs>",
+    "Comma-separated MarkdownPlugin modules (npm package or ./file.mjs), after config",
+  )
+  .action(async (file: string, options: { out?: string; config?: string; plugin?: string }) => {
+    const plugins = await loadPluginsOrExit({
+      config: options.config,
+      plugin: options.plugin,
+    });
     const filePath = resolve(process.cwd(), file);
     const outDir = resolve(process.cwd(), options.out ?? "dist-md");
     const title = basename(filePath);
     const md = readFileSync(filePath, "utf8");
-    const html = await markdownToHtmlDocument(md, { title });
+    const html = await markdownToHtmlDocument(md, {
+      title,
+      plugins,
+    });
     mkdirSync(outDir, { recursive: true });
     const outFile = join(outDir, "index.html");
     writeFileSync(outFile, html, "utf8");

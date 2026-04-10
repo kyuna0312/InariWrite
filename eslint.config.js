@@ -31,7 +31,7 @@ export default tseslint.config(
   },
   {
     files: ["apps/web/**/*.{ts,tsx}"],
-    ignores: ["apps/web/src/workers/**"],
+    ignores: ["apps/web/src/workers/**", "apps/web/e2e/**"],
     ...react.configs.flat.recommended,
     ...react.configs.flat["jsx-runtime"],
     plugins: {
@@ -48,6 +48,12 @@ export default tseslint.config(
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
+    },
+  },
+  {
+    files: ["apps/web/playwright.config.ts"],
+    languageOptions: {
+      globals: globals.node,
     },
   },
   {

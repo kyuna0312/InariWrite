@@ -15,7 +15,7 @@ InariWrite is built around a **core editing engine** that does not depend on Rea
 | Adapter | Role |
 |---------|------|
 | **Web** | React + Vite UI: panes, themes, file open/save UX |
-| **CLI** | Node: `preview`, `build`, `check`, batch operations |
+| **CLI** | Node: `preview`, `build`, `check` (relative `.md` link targets), batch operations |
 
 Optional later: **desktop** (e.g. Tauri) reusing the same `@inariwrite/core` and `@inariwrite/editor` packages.
 
@@ -66,7 +66,7 @@ Those should be **separate deployable services**, not baked into the editor core
 | Optional | KaTeX, Mermaid | Lazy-load; keep default bundle lean |
 | State in UI | **Zustand** or thin custom stores | Keep React out of `core` |
 | Styling | **CSS Modules** or **Tailwind** | Pick one; document in CONTRIBUTING |
-| Tests | **Vitest**; **Playwright** for web e2e | Aligns with Vite |
+| Tests | **Vitest**; **Playwright** smoke (`apps/web/e2e`) after `vite preview` | Aligns with Vite |
 | Tooling | **ESLint** (flat config) + **Prettier** + **TypeScript strict** | |
 | CLI | **Node 20+**, **commander** or **cac**; optional **Ink** for TUI | |
 | Docs site | **VitePress** or **Astro + Starlight** | Markdown-native, i18n-friendly |
@@ -126,7 +126,7 @@ Publish **`exports`** maps in each package’s `package.json` and avoid deep imp
 
 ### Later
 
-- **PWA / offline** (service worker; File System Access API where available)
+- **PWA / offline** — baseline shipped (`vite-plugin-pwa`); deeper offline editing / File System Access API optional
 - **Export** HTML/PDF; CLI `build` mirroring web preview
 - **Plugin** ecosystem (`inariwrite-plugin-*` naming on npm)
 - Optional **collaboration** (e.g. CRDT) after the document model is stable
@@ -141,5 +141,5 @@ Publish **`exports`** maps in each package’s `package.json` and avoid deep imp
 
 - Wrap a **remark** plugin as `@inariwrite/plugin-*`.
 - Add **tests** for parse → AST → serialize round-trips.
-- CLI: `inariwrite check` for broken **internal** Markdown links.
+- Web **a11y** improvements (shortcuts, landmarks, screen-reader polish); see [RELEASE.md](RELEASE.md).
 - Web: **accessibility** for preview (`aria-live`, focus management).

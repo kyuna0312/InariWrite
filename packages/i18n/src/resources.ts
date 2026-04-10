@@ -15,6 +15,7 @@ export const mn = {
   "preview.label": "Урьдчилан харах",
   "preview.empty": "Энд харагдана…",
   "preview.error": "Урьдчилан харуулахад алдаа гарлаа.",
+  "a11y.skipToContent": "Үндсэн агуулга руу шилжих",
   "status.filename": "Файл",
   "status.unnamed": "Баримтгүй",
   "welcome.doc":
@@ -37,6 +38,7 @@ export const en = {
   "preview.label": "Preview",
   "preview.empty": "Preview appears here…",
   "preview.error": "Could not render preview.",
+  "a11y.skipToContent": "Skip to main content",
   "status.filename": "File",
   "status.unnamed": "Untitled",
   "welcome.doc":

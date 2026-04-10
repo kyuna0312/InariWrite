@@ -1,0 +1,7 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Questions & ideas
+    url: https://github.com/OWNER/InariWrite/discussions
+    about: Ask the community or propose ideas before opening a feature issue.
+
+# Replace OWNER with your GitHub org or username when the repo is public.

@@ -19,6 +19,15 @@
     "dev": {
       "cache": false,
       "persistent": true
+    },
+    "test:e2e": {
+      "dependsOn": ["^build", "build"],
+      "cache": false,
+      "outputs": []
+    },
+    "budget": {
+      "dependsOn": ["^build", "build"],
+      "outputs": []
     }
   }
 }

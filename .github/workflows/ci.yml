@@ -31,6 +31,12 @@ jobs:
       - name: Install
         run: pnpm install --frozen-lockfile
 
+      - name: Install Playwright Chromium
+        run: pnpm --filter @inariwrite/web exec playwright install chromium --with-deps
+
+      - name: Audit dependencies
+        run: pnpm audit --audit-level=high
+
       - name: Lint
         run: pnpm lint
 
@@ -42,3 +48,9 @@ jobs:
 
       - name: Build
         run: pnpm build
+
+      - name: Bundle budgets (gzip)
+        run: pnpm run budget
+
+      - name: E2E smoke
+        run: pnpm run test:e2e

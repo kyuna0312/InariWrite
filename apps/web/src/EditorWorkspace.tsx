@@ -62,6 +62,9 @@ export function EditorWorkspace() {
 
   return (
     <div className="workspace">
+      <a className="skip-link" href="#main-content">
+        {t("a11y.skipToContent")}
+      </a>
       <header className="topbar">
         <div className="brand">
           <span className="brand-title">{t("app.title")}</span>
@@ -104,6 +107,7 @@ export function EditorWorkspace() {
             className="select"
             value={i18n.language.startsWith("mn") ? "mn" : "en"}
             onChange={(e) => onLanguageChange(e.target.value as "mn" | "en")}
+            aria-label={t("toolbar.language")}
           >
             <option value="mn">{t("lang.mn")}</option>
             <option value="en">{t("lang.en")}</option>
@@ -111,49 +115,53 @@ export function EditorWorkspace() {
         </div>
       </header>
 
-      <div className="status-bar" role="status">
-        <span className="status-text">
-          {t("status.filename")}: <strong>{displayName}</strong>
-        </span>
-      </div>
+      <main id="main-content" className="main-content" tabIndex={-1}>
+        <div className="status-bar" role="status">
+          <span className="status-text">
+            {t("status.filename")}: <strong>{displayName}</strong>
+          </span>
+        </div>
 
-      <div className="panes">
-        <section className="pane pane-editor" aria-labelledby="editor-heading">
-          <h2 id="editor-heading" className="pane-title">
-            {t("editor.label")}
-          </h2>
-          <Suspense
-            fallback={
-              <div className="editor-mount editor-loading" role="status">
-                {t("editor.loading")}
+        <div className="panes">
+          <section className="pane pane-editor" aria-labelledby="editor-heading">
+            <h2 id="editor-heading" className="pane-title">
+              {t("editor.label")}
+            </h2>
+            <Suspense
+              fallback={
+                <div className="editor-mount editor-loading" role="status">
+                  {t("editor.loading")}
+                </div>
+              }
+            >
+              <MarkdownEditor
+                value={markdown}
+                onChange={setMarkdown}
+                theme={theme}
+                ariaLabel={t("editor.aria")}
+              />
+            </Suspense>
+          </section>
+          <section className="pane pane-preview" aria-labelledby="preview-heading">
+            <h2 id="preview-heading" className="pane-title">
+              {t("preview.label")}
+            </h2>
+            {error ? (
+              <div className="preview-error-banner" role="alert">
+                <p className="preview-error">{t(error)}</p>
               </div>
-            }
-          >
-            <MarkdownEditor
-              value={markdown}
-              onChange={setMarkdown}
-              theme={theme}
-              ariaLabel={t("editor.aria")}
-            />
-          </Suspense>
-        </section>
-        <section className="pane pane-preview" aria-labelledby="preview-heading">
-          <h2 id="preview-heading" className="pane-title">
-            {t("preview.label")}
-          </h2>
-          {error ? <p className="preview-error">{t(error)}</p> : null}
-          {!error && html ? (
-            <div
-              className="preview markdown-body"
-              // Sanitized HTML from @inariwrite/core (unified + rehype-sanitize).
-              dangerouslySetInnerHTML={{ __html: html }}
-            />
-          ) : null}
-          {!error && !html ? (
-            <p className="preview-placeholder">{t("preview.empty")}</p>
-          ) : null}
-        </section>
-      </div>
+            ) : null}
+            {!error && html ? (
+              <div
+                className="preview markdown-body"
+                // Sanitized HTML from @inariwrite/core (unified + rehype-sanitize).
+                dangerouslySetInnerHTML={{ __html: html }}
+              />
+            ) : null}
+            {!error && !html ? <p className="preview-placeholder">{t("preview.empty")}</p> : null}
+          </section>
+        </div>
+      </main>
     </div>
   );
 }
