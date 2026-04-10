@@ -71,7 +71,11 @@ Those should be **separate deployable services**, not baked into the editor core
 | CLI | **Node 20+**, **commander** or **cac**; optional **Ink** for TUI | |
 | Docs site | **VitePress** or **Astro + Starlight** | Markdown-native, i18n-friendly |
 
-## Monorepo layout (target)
+## Monorepo layout
+
+**Phase 0:** `packages/core`, `apps/web`, and `apps/cli` exist. `packages/editor`, `packages/react`, and `packages/i18n` are added in later phases.
+
+**Target tree:**
 
 ```
 inariwrite/

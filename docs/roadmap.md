@@ -6,13 +6,13 @@ High-level phases from **foundation** to **production**. Timelines are indicativ
 
 **Goal:** A repo that others can clone and understand in minutes.
 
-- Monorepo scaffold (pnpm, Turborepo or equivalent)
-- CI: lint, typecheck, test, build on every PR
-- `packages/core` with a minimal API (e.g. `parse(markdown) → ast`) and unit tests
-- Empty `apps/web` shell and `apps/cli` with `--version`
-- This documentation set linked from README
+- [x] Monorepo scaffold (pnpm, Turborepo)
+- [x] CI: lint, typecheck, test, build on every PR (`.github/workflows/ci.yml`)
+- [x] `packages/core` with `parseMarkdown` → mdast and unit tests (Vitest)
+- [x] `apps/web` Vite + React shell; `apps/cli` `inariwrite` with `--version`
+- [x] Documentation linked from README
 
-**Exit criteria:** Green CI on main; architecture doc matches the tree.
+**Exit criteria:** Green CI on main; repo matches the layout in [architecture.md](architecture.md) for delivered packages (`core`, `web`, `cli`). Optional packages (`editor`, `react`, `i18n`) ship in later phases.
 
 ## Phase 1 — MVP editor
 

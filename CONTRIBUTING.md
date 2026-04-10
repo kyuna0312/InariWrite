@@ -10,16 +10,20 @@ Thank you for helping build InariWrite. This project values **clear scope**, **k
 
 Replace `OWNER` with the actual GitHub org or username when the repository is published.
 
-## Development (when the monorepo exists)
+## Development
+
+Requires **Node.js 20+** and [pnpm](https://pnpm.io/) 9 (see root `packageManager` in `package.json`).
 
 ```bash
 pnpm install
+pnpm dev          # Vite dev server (@inariwrite/web)
 pnpm lint
+pnpm typecheck
 pnpm test
 pnpm build
 ```
 
-Commands may vary slightly per `package.json`; the README will stay updated.
+Use `corepack enable` then `corepack prepare pnpm@9.15.9 --activate` if you do not have pnpm installed globally.
 
 ## Pull requests
 

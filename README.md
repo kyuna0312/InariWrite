@@ -6,7 +6,7 @@ InariWrite aims for a **clean, modular, extensible** architecture: a UI-agnostic
 
 ## Status
 
-Early stage — architecture and docs first; application packages will land in the monorepo as development progresses.
+**Phase 0 (foundation) complete:** pnpm + Turborepo monorepo, `@inariwrite/core` with `parseMarkdown` + tests, Vite/React shell in `apps/web`, CLI `inariwrite` with `--version`, and CI on GitHub Actions. Phase 1 adds the real editor and i18n.
 
 ## Documentation
 
@@ -18,14 +18,14 @@ Early stage — architecture and docs first; application packages will land in t
 | [Open source & branding](docs/open-source-strategy.md) | License, community, Mongolian ecosystem positioning |
 | [Contributing](CONTRIBUTING.md) | How to contribute |
 
-## Quick start (when packages exist)
+## Quick start
 
 ```bash
 pnpm install
 pnpm dev
 ```
 
-Until the workspace is scaffolded, use the docs above as the source of truth for structure and goals.
+Open the URL Vite prints (usually `http://localhost:5173`). From the repo root after `pnpm build`, run `node apps/cli/dist/index.js --version` to verify the CLI (or install/link the `inariwrite` bin per `apps/cli/package.json`).
 
 ## License
 
