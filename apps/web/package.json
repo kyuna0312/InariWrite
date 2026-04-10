@@ -10,6 +10,11 @@
     "typecheck": "tsc -b --noEmit"
   },
   "dependencies": {
+    "@codemirror/commands": "^6.7.1",
+    "@codemirror/lang-markdown": "^6.3.2",
+    "@codemirror/state": "^6.5.0",
+    "@codemirror/theme-one-dark": "^6.1.2",
+    "@codemirror/view": "^6.35.0",
     "@inariwrite/core": "workspace:*",
     "@inariwrite/i18n": "workspace:*",
     "i18next": "^24.2.0",
@@ -22,6 +27,8 @@
     "@types/react-dom": "^18.3.5",
     "@vitejs/plugin-react": "^4.3.4",
     "typescript": "^5.7.2",
-    "vite": "^6.0.3"
+    "vite": "^6.0.3",
+    "vite-plugin-pwa": "^0.21.1",
+    "workbox-window": "^7.3.0"
   }
 }

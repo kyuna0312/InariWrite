@@ -12,6 +12,7 @@
     "typecheck": "tsc --noEmit -p tsconfig.build.json"
   },
   "dependencies": {
+    "@inariwrite/core": "workspace:*",
     "cac": "^6.7.14"
   },
   "devDependencies": {

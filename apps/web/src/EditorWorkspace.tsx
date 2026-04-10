@@ -1,4 +1,5 @@
 import { en, mn } from "@inariwrite/i18n";
+import { MarkdownEditor } from "./MarkdownEditor.js";
 import { useMarkdownPreview } from "./hooks/useMarkdownPreview.js";
 import { persistLocale, readInitialLang } from "./i18n/init.js";
 import { persistTheme, readStoredTheme, type Theme } from "./theme/storage.js";
@@ -117,12 +118,11 @@ export function EditorWorkspace() {
           <h2 id="editor-heading" className="pane-title">
             {t("editor.label")}
           </h2>
-          <textarea
-            className="editor"
-            spellCheck={false}
+          <MarkdownEditor
             value={markdown}
-            onChange={(e) => setMarkdown(e.target.value)}
-            aria-label={t("editor.aria")}
+            onChange={setMarkdown}
+            theme={theme}
+            ariaLabel={t("editor.aria")}
           />
         </section>
         <section className="pane pane-preview" aria-labelledby="preview-heading">

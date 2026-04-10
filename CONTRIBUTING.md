@@ -23,6 +23,8 @@ pnpm test
 pnpm build
 ```
 
+After a build, you can run `node apps/cli/dist/index.js preview <file.md>` or `… build <file.md> -o <dir>` (see README).
+
 Use `corepack enable` then `corepack prepare pnpm@9.15.9 --activate` if you do not have pnpm installed globally.
 
 ## Pull requests

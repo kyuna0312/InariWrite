@@ -6,7 +6,7 @@ InariWrite aims for a **clean, modular, extensible** architecture: a UI-agnostic
 
 ## Status
 
-**Phase 1 (MVP editor) delivered:** split-pane Markdown editor with **live preview** (GFM via `@inariwrite/core`), **light/dark** themes, **Mongolian-first** UI with English (`@inariwrite/i18n`), and **open/save** for `.md` files in the browser. Monorepo, CI, and CLI are from Phase 0.
+**Shipped:** split-pane editor with **CodeMirror 6** + **live preview** (GFM via `@inariwrite/core`), **light/dark** themes, **Mongolian-first** UI (`@inariwrite/i18n`), **open/save**, **PWA / offline-capable** production build (`vite-plugin-pwa`), and **CLI** `preview` / `build` using the same HTML pipeline as the app.
 
 ## Documentation
 
@@ -25,7 +25,18 @@ pnpm install
 pnpm dev
 ```
 
-Open the URL Vite prints (usually `http://localhost:5173`). Use **Open file** / **Save** in the toolbar for local Markdown. After `pnpm build`, run `node apps/cli/dist/index.js --version` to verify the CLI.
+Open the URL Vite prints (usually `http://localhost:5173`). Use **Open file** / **Save** in the toolbar for local Markdown.
+
+## CLI
+
+After `pnpm build`:
+
+```bash
+node apps/cli/dist/index.js preview ./README.md
+node apps/cli/dist/index.js build ./README.md -o ./dist-md
+```
+
+`preview` serves sanitized HTML and re-reads the file on each request. `build` writes `index.html` into the output directory.
 
 ## License
 

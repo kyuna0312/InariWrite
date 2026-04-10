@@ -200,20 +200,31 @@ body {
   background: var(--bg);
 }
 
-.editor {
+.editor-mount {
   flex: 1;
+  min-height: 0;
   width: 100%;
-  margin: 0;
-  padding: 1rem;
-  resize: none;
-  border: none;
-  outline: none;
+  overflow: hidden;
+}
+
+.editor-mount .cm-editor {
+  height: 100%;
+}
+
+.editor-mount .cm-scroller {
   font-family: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, monospace;
   font-size: 0.875rem;
   line-height: 1.55;
-  color: var(--text);
-  background: var(--bg-elevated);
-  tab-size: 2;
+}
+
+.editor-mount .cm-gutters {
+  border-right: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text-muted);
+}
+
+.editor-mount .cm-activeLineGutter {
+  background: transparent;
 }
 
 .preview {

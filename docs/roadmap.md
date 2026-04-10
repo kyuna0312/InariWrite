@@ -43,7 +43,7 @@ High-level phases from **foundation** to **production**. Timelines are indicativ
 **Goal:** Same logic everywhere; plugins and CLI prove the architecture.
 
 - Stable **plugin API** surface in core + one demo plugin
-- CLI: `preview` (local server), `build` (static HTML) using shared pipeline
+- [x] CLI: `preview` (local server), `build` (static HTML) via `markdownToHtmlDocument` in `@inariwrite/core`
 - Performance pass: worker, lazy Shiki/Mermaid
 
 **Exit criteria:** Plugin and CLI documented; no duplicate markdown logic in apps.
