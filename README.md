@@ -6,7 +6,7 @@ InariWrite aims for a **clean, modular, extensible** architecture: a UI-agnostic
 
 ## Status
 
-**Shipped:** split-pane editor with **CodeMirror 6** (lazy-loaded chunk) + **live preview** (GFM via `@inariwrite/core`), **light/dark** themes, **Mongolian-first** UI (`@inariwrite/i18n`), **open/save**, **PWA / offline-capable** production build (`vite-plugin-pwa`), and **CLI** `preview` / `preview --watch` (SSE + poll fallback, `--interval`) / `build` using the same HTML pipeline as the app.
+**Shipped:** **Phase 3** — `MarkdownPlugin` + **`@inariwrite/plugin-sample`**, preview in a **Web Worker**, plus split-pane **CodeMirror 6** (lazy-loaded) + **live preview** (GFM via `@inariwrite/core`), **light/dark** themes, **Mongolian-first** UI (`@inariwrite/i18n`), **open/save**, **PWA** build, and **CLI** `preview` / `--watch` / `build`. See [docs/plugins.md](docs/plugins.md).
 
 ## Documentation
 
@@ -16,6 +16,7 @@ InariWrite aims for a **clean, modular, extensible** architecture: a UI-agnostic
 | [Roadmap](docs/roadmap.md) | MVP → production phases |
 | [Internationalization](docs/internationalization.md) | Mongolian-first i18n strategy |
 | [Open source & branding](docs/open-source-strategy.md) | License, community, Mongolian ecosystem positioning |
+| [Plugins](docs/plugins.md) | `MarkdownPlugin` API, sample package, worker preview |
 | [Contributing](CONTRIBUTING.md) | How to contribute |
 
 ## Quick start

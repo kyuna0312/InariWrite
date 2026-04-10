@@ -4,7 +4,7 @@ Thank you for helping build InariWrite. This project values **clear scope**, **k
 
 ## Before you start
 
-1. Read [docs/architecture.md](docs/architecture.md) for layers and package boundaries.
+1. Read [docs/architecture.md](docs/architecture.md) and [docs/plugins.md](docs/plugins.md) for layers and the `MarkdownPlugin` API.
 2. Read [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
 3. Check [existing issues](https://github.com/OWNER/InariWrite/issues) or open one to discuss larger changes.
 

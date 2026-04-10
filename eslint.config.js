@@ -24,7 +24,14 @@ export default tseslint.config(
     },
   },
   {
+    files: ["apps/web/src/workers/**/*.ts"],
+    languageOptions: {
+      globals: globals.worker,
+    },
+  },
+  {
     files: ["apps/web/**/*.{ts,tsx}"],
+    ignores: ["apps/web/src/workers/**"],
     ...react.configs.flat.recommended,
     ...react.configs.flat["jsx-runtime"],
     plugins: {
@@ -44,7 +51,12 @@ export default tseslint.config(
     },
   },
   {
-    files: ["apps/cli/**/*.ts", "packages/core/**/*.ts", "packages/i18n/**/*.ts"],
+    files: [
+      "apps/cli/**/*.ts",
+      "packages/core/**/*.ts",
+      "packages/i18n/**/*.ts",
+      "packages/plugin-sample/**/*.ts",
+    ],
     languageOptions: {
       globals: globals.node,
     },

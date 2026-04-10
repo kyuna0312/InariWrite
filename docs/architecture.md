@@ -73,7 +73,7 @@ Those should be **separate deployable services**, not baked into the editor core
 
 ## Monorepo layout
 
-**Shipped now:** `packages/core`, `packages/i18n`, `apps/web`, and `apps/cli`. `packages/editor` and `packages/react` remain planned (thin React-specific editor layer on top of core).
+**Shipped now:** `packages/core`, `packages/i18n`, `packages/plugin-sample`, `apps/web`, and `apps/cli`. `packages/editor` and `packages/react` remain planned (thin React-specific editor layer on top of core). See [plugins.md](plugins.md) for the `MarkdownPlugin` contract and sample package.
 
 **Target tree:**
 

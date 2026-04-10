@@ -75,6 +75,9 @@ importers:
       '@inariwrite/i18n':
         specifier: workspace:*
         version: link:../../packages/i18n
+      '@inariwrite/plugin-sample':
+        specifier: workspace:*
+        version: link:../../packages/plugin-sample
       i18next:
         specifier: ^24.2.0
         version: 24.2.3(typescript@5.9.3)
@@ -146,6 +149,25 @@ importers:
       typescript:
         specifier: ^5.7.2
         version: 5.9.3
+
+  packages/plugin-sample:
+    dependencies:
+      '@inariwrite/core':
+        specifier: workspace:*
+        version: link:../core
+      unist-util-visit:
+        specifier: ^5.0.0
+        version: 5.1.0
+    devDependencies:
+      '@types/mdast':
+        specifier: ^4.0.4
+        version: 4.0.4
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+      vitest:
+        specifier: ^2.1.8
+        version: 2.1.9(@types/node@22.19.17)(terser@5.46.1)
 
 packages:
 

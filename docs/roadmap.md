@@ -42,9 +42,9 @@ High-level phases from **foundation** to **production**. Timelines are indicativ
 
 **Goal:** Same logic everywhere; plugins and CLI prove the architecture.
 
-- Stable **plugin API** surface in core + one demo plugin
+- [x] Stable **`MarkdownPlugin` API** in `@inariwrite/core` (`defineMarkdownPlugin`, remark/rehype stages) + **`@inariwrite/plugin-sample`** (`:inari:` → 🦊)
 - [x] CLI: `preview` (local server), `build` (static HTML) via `markdownToHtmlDocument` in `@inariwrite/core`
-- Performance pass: worker, lazy Shiki/Mermaid
+- [x] Performance: **preview runs in a Web Worker** when available; Shiki/Mermaid left as optional future rehype plugins (see [plugins.md](plugins.md))
 
 **Exit criteria:** Plugin and CLI documented; no duplicate markdown logic in apps.
 

@@ -18,7 +18,7 @@ export const mn = {
   "status.filename": "Файл",
   "status.unnamed": "Баримтгүй",
   "welcome.doc":
-    "# InariWrite\n\nЭнд **Markdown** бичнэ үү. Урьдчилан харах нь баруун талд шинэчлэгдэнэ.\n\n| Хэсэг | Тайлбар |\n| --- | --- |\n| GFM | Хүснэгт, ~~зураас~~, жагсаалт |\n",
+    "# InariWrite\n\nЭнд **Markdown** бичнэ үү. Урьдчилан харах нь баруун талд шинэчлэгдэнэ.\n\nЖишээ нэмэлт (`@inariwrite/plugin-sample`): `:inari:`\n\n| Хэсэг | Тайлбар |\n| --- | --- |\n| GFM | Хүснэгт, ~~зураас~~, жагсаалт |\n",
 } as const;
 
 export const en = {
@@ -40,5 +40,5 @@ export const en = {
   "status.filename": "File",
   "status.unnamed": "Untitled",
   "welcome.doc":
-    "# InariWrite\n\nWrite **Markdown** here. The preview updates on the right.\n\n| Piece | Note |\n| --- | --- |\n| GFM | Tables, ~~strikethrough~~, task lists |\n",
+    "# InariWrite\n\nWrite **Markdown** here. The preview updates on the right.\n\nSample plugin (`@inariwrite/plugin-sample`): `:inari:`\n\n| Piece | Note |\n| --- | --- |\n| GFM | Tables, ~~strikethrough~~, task lists |\n",
 } as const;

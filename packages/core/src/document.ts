@@ -1,9 +1,11 @@
 import { markdownToHtml } from "./markdown.js";
+import type { MarkdownPlugin } from "./plugins/types.js";
 import { STANDALONE_MARKDOWN_CSS } from "./standaloneCss.js";
 
 export type MarkdownDocumentOptions = {
   title?: string;
   subtitle?: string;
+  plugins?: MarkdownPlugin[];
 };
 
 /**
@@ -15,7 +17,7 @@ export async function markdownToHtmlDocument(
 ): Promise<string> {
   const title = options?.title?.trim() || "InariWrite";
   const subtitle = options?.subtitle?.trim();
-  const body = await markdownToHtml(markdown);
+  const body = await markdownToHtml(markdown, { plugins: options?.plugins });
   const sub = subtitle
     ? `<p>${escapeHtml(subtitle)}</p>`
     : "<p>Rendered with InariWrite</p>";
