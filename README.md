@@ -6,7 +6,7 @@ InariWrite aims for a **clean, modular, extensible** architecture: a UI-agnostic
 
 ## Status
 
-**Shipped:** split-pane editor with **CodeMirror 6** (lazy-loaded chunk) + **live preview** (GFM via `@inariwrite/core`), **light/dark** themes, **Mongolian-first** UI (`@inariwrite/i18n`), **open/save**, **PWA / offline-capable** production build (`vite-plugin-pwa`), and **CLI** `preview` / `preview --watch` / `build` using the same HTML pipeline as the app.
+**Shipped:** split-pane editor with **CodeMirror 6** (lazy-loaded chunk) + **live preview** (GFM via `@inariwrite/core`), **light/dark** themes, **Mongolian-first** UI (`@inariwrite/i18n`), **open/save**, **PWA / offline-capable** production build (`vite-plugin-pwa`), and **CLI** `preview` / `preview --watch` (SSE + poll fallback, `--interval`) / `build` using the same HTML pipeline as the app.
 
 ## Documentation
 
@@ -34,10 +34,11 @@ After `pnpm build`:
 ```bash
 node apps/cli/dist/index.js preview ./README.md
 node apps/cli/dist/index.js preview ./README.md --watch
+node apps/cli/dist/index.js preview ./README.md --watch --interval 750
 node apps/cli/dist/index.js build ./README.md -o ./dist-md
 ```
 
-`preview` serves sanitized HTML and re-reads the file on each request. With **`--watch`**, the page polls the server and **reloads when the file’s modification time changes**. `build` writes `index.html` into the output directory.
+`preview` serves sanitized HTML and re-reads the file on each request. With **`--watch`**, the server uses **`fs.watch`** and pushes **`EventSource`** updates (`/__inariwrite/events`); the page **reloads on change**. If EventSource fails (or `fs.watch` is unavailable), it **falls back to polling** `/__inariwrite/mtime`. **`--interval`** sets the poll period in milliseconds (clamped 100–60000, default 500). `build` writes `index.html` into the output directory.
 
 ## License
 

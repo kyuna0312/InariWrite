@@ -23,7 +23,7 @@ pnpm test
 pnpm build
 ```
 
-After a build, you can run `node apps/cli/dist/index.js preview <file.md>` (add `--watch` to auto-reload on save) or `… build <file.md> -o <dir>` (see README).
+After a build, you can run `node apps/cli/dist/index.js preview <file.md>` (`--watch` uses SSE with polling fallback; `--interval` for poll ms) or `… build <file.md> -o <dir>` (see README).
 
 Use `corepack enable` then `corepack prepare pnpm@9.15.9 --activate` if you do not have pnpm installed globally.
 
