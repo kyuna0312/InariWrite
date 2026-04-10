@@ -73,7 +73,7 @@ Those should be **separate deployable services**, not baked into the editor core
 
 ## Monorepo layout
 
-**Phase 0:** `packages/core`, `apps/web`, and `apps/cli` exist. `packages/editor`, `packages/react`, and `packages/i18n` are added in later phases.
+**Shipped now:** `packages/core`, `packages/i18n`, `apps/web`, and `apps/cli`. `packages/editor` and `packages/react` remain planned (thin React-specific editor layer on top of core).
 
 **Target tree:**
 

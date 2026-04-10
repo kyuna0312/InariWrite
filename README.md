@@ -6,7 +6,7 @@ InariWrite aims for a **clean, modular, extensible** architecture: a UI-agnostic
 
 ## Status
 
-**Phase 0 (foundation) complete:** pnpm + Turborepo monorepo, `@inariwrite/core` with `parseMarkdown` + tests, Vite/React shell in `apps/web`, CLI `inariwrite` with `--version`, and CI on GitHub Actions. Phase 1 adds the real editor and i18n.
+**Phase 1 (MVP editor) delivered:** split-pane Markdown editor with **live preview** (GFM via `@inariwrite/core`), **light/dark** themes, **Mongolian-first** UI with English (`@inariwrite/i18n`), and **open/save** for `.md` files in the browser. Monorepo, CI, and CLI are from Phase 0.
 
 ## Documentation
 
@@ -25,7 +25,7 @@ pnpm install
 pnpm dev
 ```
 
-Open the URL Vite prints (usually `http://localhost:5173`). From the repo root after `pnpm build`, run `node apps/cli/dist/index.js --version` to verify the CLI (or install/link the `inariwrite` bin per `apps/cli/package.json`).
+Open the URL Vite prints (usually `http://localhost:5173`). Use **Open file** / **Save** in the toolbar for local Markdown. After `pnpm build`, run `node apps/cli/dist/index.js --version` to verify the CLI.
 
 ## License
 

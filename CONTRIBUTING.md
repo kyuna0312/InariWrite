@@ -29,7 +29,7 @@ Use `corepack enable` then `corepack prepare pnpm@9.15.9 --activate` if you do n
 
 - **One logical change per PR** when possible.
 - **Update or add tests** for behavior changes in `packages/core` and `packages/editor`.
-- **UI strings:** If you add user-visible text, update **both** `mn` and `en` catalogs when they exist, or note in the PR that a follow-up translation issue is needed.
+- **UI strings:** If you add user-visible text, update **both** `mn` and `en` in `packages/i18n/src/resources.ts`, or note in the PR that a follow-up translation issue is needed.
 - **Conventional Commits** are welcome (`feat:`, `fix:`, `docs:`) for clearer history and changelogs.
 
 ## Good first contributions

@@ -13,16 +13,7 @@ InariWrite is **Mongolian-first** in spirit: the project home and community stor
 - **i18next** + **react-i18next** for the web app, **or**
 - **FormatJS** if the team prefers ICU messages everywhere
 
-Keep message files in a dedicated package or folder, for example:
-
-```
-packages/i18n/
-├── locales/
-│   ├── mn.json
-│   └── en.json
-└── src/
-    └── index.ts
-```
+UI strings live in **`@inariwrite/i18n`** (`packages/i18n/src/resources.ts`), exported as `mn`, `en`, and `resources` for `i18next`. Add keys there for both locales when you change the chrome.
 
 ## Contributor workflow
 

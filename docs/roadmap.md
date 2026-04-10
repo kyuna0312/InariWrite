@@ -18,11 +18,11 @@ High-level phases from **foundation** to **production**. Timelines are indicativ
 
 **Goal:** A credible daily-use Markdown editor.
 
-- Web: editor + live preview, GFM
-- Themes (dark/light)
-- i18n: `mn` default + `en` fallback for UI chrome
-- File open/save story (web-appropriate)
-- README quick start accurate for `pnpm dev`
+- [x] Web: editor + live preview, GFM (`markdownToHtml` + `rehype-sanitize` in `@inariwrite/core`)
+- [x] Themes (dark/light), persisted in `localStorage`
+- [x] i18n: `mn` default + `en` via `@inariwrite/i18n` and `react-i18next`
+- [x] File open/save (browser file picker + download)
+- [x] README quick start for `pnpm dev`
 
 **Exit criteria:** Someone can write a real note or doc page and save it; MN/EN UI works.
 

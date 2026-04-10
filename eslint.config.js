@@ -44,7 +44,7 @@ export default tseslint.config(
     },
   },
   {
-    files: ["apps/cli/**/*.ts", "packages/core/**/*.ts"],
+    files: ["apps/cli/**/*.ts", "packages/core/**/*.ts", "packages/i18n/**/*.ts"],
     languageOptions: {
       globals: globals.node,
     },
