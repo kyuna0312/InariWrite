@@ -1,10 +1,14 @@
 import { en, mn } from "@inariwrite/i18n";
-import { MarkdownEditor } from "./MarkdownEditor.js";
 import { useMarkdownPreview } from "./hooks/useMarkdownPreview.js";
 import { persistLocale, readInitialLang } from "./i18n/init.js";
 import { persistTheme, readStoredTheme, type Theme } from "./theme/storage.js";
-import { useCallback, useRef, useState, type ChangeEvent } from "react";
+import { lazy, Suspense, useCallback, useRef, useState, type ChangeEvent } from "react";
 import { useTranslation } from "react-i18next";
+
+const MarkdownEditor = lazy(async () => {
+  const m = await import("./MarkdownEditor.js");
+  return { default: m.MarkdownEditor };
+});
 
 export function EditorWorkspace() {
   const { t, i18n } = useTranslation();
@@ -118,12 +122,20 @@ export function EditorWorkspace() {
           <h2 id="editor-heading" className="pane-title">
             {t("editor.label")}
           </h2>
-          <MarkdownEditor
-            value={markdown}
-            onChange={setMarkdown}
-            theme={theme}
-            ariaLabel={t("editor.aria")}
-          />
+          <Suspense
+            fallback={
+              <div className="editor-mount editor-loading" role="status">
+                {t("editor.loading")}
+              </div>
+            }
+          >
+            <MarkdownEditor
+              value={markdown}
+              onChange={setMarkdown}
+              theme={theme}
+              ariaLabel={t("editor.aria")}
+            />
+          </Suspense>
         </section>
         <section className="pane pane-preview" aria-labelledby="preview-heading">
           <h2 id="preview-heading" className="pane-title">
