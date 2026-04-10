@@ -4,6 +4,7 @@ import type { MarkdownPlugin } from "@inariwrite/core";
 import { sampleMarkdownPlugin } from "@inariwrite/plugin-sample";
 import { checkMarkdownRelativeLinks, formatCheckReport } from "./check.js";
 import { resolveCliMarkdownPlugins } from "./loadPlugins.js";
+import { publishMarkdownFile } from "./publish.js";
 import { mkdirSync, readFileSync, statSync, watch, writeFileSync } from "node:fs";
 import type { ServerResponse } from "node:http";
 import { createServer } from "node:http";
@@ -263,6 +264,44 @@ cli
     process.stderr.write(`${report}\n`);
     process.exit(1);
   });
+
+cli
+  .command("publish <file>", "POST/PUT/PATCH raw Markdown to an HTTP(S) URL you control")
+  .option("-u, --url <url>", "Target URL (http or https)")
+  .option("-m, --method <method>", "POST, PUT, or PATCH", { default: "POST" })
+  .option(
+    "--token <token>",
+    "Bearer token (avoid shell history: use env INARIWRITE_PUBLISH_TOKEN instead)",
+  )
+  .action(
+    async (
+      file: string,
+      options: { url?: string; method?: string; token?: string },
+    ) => {
+      const url = options.url?.trim();
+      if (!url) {
+        exitErr("Missing --url (example: inariwrite publish note.md -u https://api.example.com/hooks/md)");
+      }
+      const filePath = resolve(process.cwd(), file);
+      const token = options.token?.trim() || process.env.INARIWRITE_PUBLISH_TOKEN?.trim();
+      try {
+        const res = await publishMarkdownFile(filePath, {
+          url,
+          method: options.method,
+          token,
+        });
+        const snippet = await res.text();
+        if (!res.ok) {
+          const extra = snippet ? `: ${snippet.slice(0, 500)}` : "";
+          exitErr(`Publish failed: HTTP ${res.status} ${res.statusText}${extra}`);
+        }
+        process.stderr.write(`Published ${filePath} → ${url} (${res.status})\n`);
+      } catch (e) {
+        const msg = e instanceof Error ? e.message : String(e);
+        exitErr(`Publish failed: ${msg}`);
+      }
+    },
+  );
 
 cli
   .command("build <file>", "Write index.html from a Markdown file")

@@ -1,28 +1,30 @@
 # Release and “1.0” criteria
 
-This file is the **explicit checklist** for calling a release production-ready. It complements [roadmap.md](roadmap.md).
+**Doc index:** [README.md](README.md) · **Phases:** [roadmap.md](roadmap.md)
 
-## Phase 4 — production hardening (summary)
+Explicit checklist for calling a release **production-ready**.
 
-| Area | Status |
-|------|--------|
-| **PWA / offline** | Service worker via `vite-plugin-pwa` (`apps/web`); precaches built assets. Editing stays local-first; first load needs network unless the shell is already cached. |
-| **Accessibility** | Skip link to main content, visible `:focus-visible` rings on controls, `role="alert"` for preview errors, semantic regions (`header` / `main` / `section`), labeled file input and selects. Screen-reader and full WCAG audits remain manual follow-ups. |
-| **Dependency hygiene** | [Dependabot](../.github/dependabot.yml); **`pnpm audit --audit-level=high`** in [CI](../.github/workflows/ci.yml). Root **`pnpm.overrides`** may pin transitive fixes when advisories lag upstream. |
-| **Performance budgets** | **Gzip budgets** on `apps/web/dist/assets` via `pnpm run budget` (after build); CI runs it on every PR. |
+## Phase 4 — hardening (summary)
+
+| Area | What shipped |
+|------|----------------|
+| **PWA** | `vite-plugin-pwa` precaches built assets; editing stays local-first; first visit needs network until shell is cached. |
+| **Accessibility** | Skip link, `:focus-visible` on controls, `role="alert"` on preview errors, landmarks (`header` / `main` / `section`), labeled file input and selects. Full WCAG/screen-reader audits = manual follow-up. |
+| **Dependencies** | [Dependabot](../.github/dependabot.yml); **`pnpm audit --audit-level=high`** in [CI](../.github/workflows/ci.yml); root **`pnpm.overrides`** for transitive fixes when needed. |
+| **Bundle size** | Gzip **budgets** on `apps/web/dist/assets` via **`pnpm run budget`** (CI after build). |
 
 ## Version 1.0 checklist
 
-Ship when these are true (tick in [roadmap.md](roadmap.md) Version section as you go):
+Tick alongside [roadmap.md](roadmap.md) as you go.
 
-- [ ] **`@inariwrite/core` API** treated as semver-stable; breaking changes only on major bumps.
-- [ ] **Web MVP** + **CLI** (`preview`, `build`, `check`, config/plugins) documented in README and [plugins.md](plugins.md).
-- [ ] **MN + EN** for all user-visible chrome (`packages/i18n`).
-- [ ] **LICENSE**, **CONTRIBUTING**, **SECURITY**, **CoC** — contact placeholders replaced for real maintainers.
-- [ ] **CI green** on `main`; **Playwright** smoke (`pnpm run test:e2e`, Chromium) exercises load + editor + preview. Local runs need browsers once: `pnpm --filter @inariwrite/web exec playwright install chromium`.
-- [ ] **Changeset** (or release notes process) agreed for user-facing package changes.
+- [ ] **`@inariwrite/core`** API treated as **semver-stable**; breaking changes only on **major**.  
+- [ ] **Web MVP** + **CLI** (`preview`, `build`, `check`, config/plugins) documented in [README](../README.md) and [plugins.md](plugins.md).  
+- [ ] **MN + EN** for all user-visible chrome (`packages/i18n`).  
+- [ ] **LICENSE**, **CONTRIBUTING**, **SECURITY**, **CoC** — real contacts (no placeholders).  
+- [ ] **CI green** on `main`; **Playwright** smoke (`pnpm run test:e2e`, Chromium) covers load + editor + preview. One-time: `pnpm --filter @inariwrite/web exec playwright install chromium`.  
+- [ ] **Changesets** (or agreed release notes) for user-facing package changes.
 
-## Publishing
+## Publishing packages
 
-- Use **`pnpm changeset`** before merging user-visible library changes; run **`pnpm version-packages`** when cutting versions (see [CONTRIBUTING.md](../CONTRIBUTING.md)).
-- Add **`NPM_TOKEN`** and a release workflow when packages are published to a registry.
+- **`pnpm changeset`** before merging user-visible library changes; **`pnpm version-packages`** when cutting versions ([CONTRIBUTING](../CONTRIBUTING.md)).  
+- Add **`NPM_TOKEN`** + a release workflow when publishing to npm.

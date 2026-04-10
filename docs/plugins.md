@@ -1,6 +1,9 @@
 # Plugins (`@inariwrite/core`)
 
-InariWrite exposes a small, stable hook for **remark** and **rehype** plugins around the default GFM pipeline.
+**Монгол тайлбар:** [plugins.mn.md](plugins.mn.md)  
+**Doc index:** [README.md](README.md) · **Architecture:** [architecture.md](architecture.md) · **CLI usage:** root [README](../README.md#cli)
+
+InariWrite exposes a small, stable hook for **remark** and **rehype** plugins on top of the default **GFM** pipeline.
 
 ## `MarkdownPlugin`
 
@@ -14,47 +17,48 @@ const myPlugin: MarkdownPlugin = {
 };
 ```
 
-Each list item is a **unified `Pluggable`**: either a plugin function, or a `[plugin, options]` tuple. They are applied with `processor.use(pluggable)` in order.
+Each entry is a **unified `Pluggable`**: a plugin function, or a **`[plugin, options]`** tuple. Applied with `processor.use(pluggable)` in list order.
 
-- **`remarkPlugins`** — run **after** `remark-gfm` and **before** `remark-rehype`.
-- **`rehypePlugins`** — run **after** `remark-rehype` and **before** `rehype-sanitize**.
+`defineMarkdownPlugin()` is a typed helper; behavior matches a plain object.
 
-Use `defineMarkdownPlugin()` for a typed helper; behavior is the same as returning the object.
+### Where plugins run
 
-## APIs that accept plugins
+| Field | Stage |
+|-------|--------|
+| **`remarkPlugins`** | After **remark-gfm**, before **remark-rehype** |
+| **`rehypePlugins`** | After **remark-rehype**, before **rehype-sanitize** |
 
-| Function | Option |
-|----------|--------|
-| `parseMarkdown(markdown, { plugins })` | remark stage only |
-| `markdownToHtml(markdown, { plugins })` | remark + rehype |
-| `markdownToHtmlDocument(markdown, { plugins, … })` | passed through to `markdownToHtml` |
-| `listRelativeMarkdownFileLinks(markdown, { plugins })` | remark stage only; used by `inariwrite check` |
+## APIs that accept `{ plugins }`
 
-## CLI: config and extra plugins
+| API | Plugins affect |
+|-----|----------------|
+| `parseMarkdown(markdown, { plugins })` | Remark only |
+| `markdownToHtml(markdown, { plugins })` | Remark + rehype |
+| `markdownToHtmlDocument(markdown, { plugins, … })` | Same as `markdownToHtml` |
+| `listRelativeMarkdownFileLinks(markdown, { plugins })` | Remark only; powers **`inariwrite check`** |
 
-`inariwrite preview`, `build`, and `check` share the same **default** plugins as the web app (`@inariwrite/plugin-sample` first). You can add more in two ways:
+## CLI: config and `--plugin`
 
-1. **Config file** in the current working directory: `inariwrite.config.mjs`, `inariwrite.config.js`, or `inariwrite.config.cjs`. Export either:
-   - `export default { markdownPlugins: [myPlugin, …] }`, or
-   - `export default myPlugin`, or
-   - `export const markdownPlugins = […]`
+`inariwrite preview`, **`build`**, and **`check`** use the same default plugins as the web app (**`@inariwrite/plugin-sample`** first). Add more via:
 
-2. **`--plugin <specs>`** — comma-separated module specifiers resolved like Node `import()`: npm package names (e.g. `@scope/pkg`) or relative paths (`./my-plugin.mjs`). Loaded **after** config plugins.
+| Mechanism | Details |
+|-----------|---------|
+| **Config file** (cwd) | `inariwrite.config.mjs` / `.js` / `.cjs` — `export default { markdownPlugins: […] }` or `export default onePlugin` or `export const markdownPlugins = […]` |
+| **`--plugin <specs>`** | Comma-separated specifiers for dynamic `import()` (npm scope or `./path.mjs`). Loaded **after** config plugins. |
+| **`-c, --config <file>`** | Use that file instead of auto-discovery. |
 
-Use **`-c, --config <file>`** to point at a config file instead of auto-discovery.
+## Sample: `@inariwrite/plugin-sample`
 
-## Sample package
+Replaces `:inari:` with 🦊. Wired into the **web preview worker** (and main-thread fallback) and loaded **first** for CLI **`preview` / `build` / `check`**. Add others via config or **`--plugin`**.
 
-**`@inariwrite/plugin-sample`** replaces `:inari:` in text with 🦊. It is wired into the **web preview worker** (and main-thread fallback) and is the **first** plugin for **`inariwrite preview` / `build` / `check`**; add more via **`inariwrite.config.*`** or **`--plugin`** (above).
+## Web preview worker
 
-## Performance: preview worker
+Preview HTML runs in a **Web Worker** when `Worker` exists, so the unified pipeline stays off the UI thread. Plugin list matches the fallback path. If the worker does not answer within a few seconds, the app **falls back to the main thread** (helps PWA edge cases and tests).
 
-The web app renders preview HTML in a **dedicated worker** when `Worker` is available, so the unified pipeline stays off the UI thread. The worker uses the same plugin list as the fallback path. If the worker does not respond within a few seconds, the app **falls back to the main thread** so preview still updates (helps PWA/preview edge cases and tests).
+## Heavy plugins (Shiki, Mermaid, …)
 
-## Future: Shiki, Mermaid, heavy transforms
+Not bundled by default (install + payload size). Suggested pattern:
 
-Syntax highlighting (e.g. Shiki) and diagrams (Mermaid) are **not** bundled by default to keep install size and main/worker payloads small. Recommended approach:
-
-1. Add a dedicated **`MarkdownPlugin`** that wraps `rehype-shiki` or similar.
-2. Load that plugin **only in the worker** (or via `import()` inside the plugin factory) so the initial shell stays lean.
-3. Keep sanitization (`rehype-sanitize`) **after** your rehype plugins, or extend the sanitize schema carefully for the tags/classes you need.
+1. Ship a **`MarkdownPlugin`** that wraps e.g. `rehype-shiki`.
+2. Lazy-load inside the plugin (or **worker-only**) so the shell stays small.
+3. Keep **`rehype-sanitize` after** your rehype plugins, or extend the sanitize schema deliberately for any new tags/classes.

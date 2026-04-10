@@ -1,23 +1,45 @@
-# Good first issues (templates for maintainers)
+# Good first issues (templates)
 
-Copy any item into a real GitHub issue and apply the **`good first issue`** label. Each has a clear scope and acceptance hint.
+**Doc index:** [README.md](README.md) · **Contributing:** [CONTRIBUTING](../CONTRIBUTING.md)
 
-1. ~~**CLI: `check` command for broken internal links**~~ **Done** — `inariwrite check <file.md>` uses `listRelativeMarkdownFileLinks` in `@inariwrite/core`; see `apps/cli/src/check.ts` and tests.
+Copy any block into a GitHub issue and label **`good first issue`**. Each item has scope + acceptance hint.
 
-2. **i18n: one missing key audit**  
-   Script or test that fails CI if `mn` and `en` keys in `packages/i18n/src/resources.ts` diverge (same key set).  
-   *Acceptance:* `pnpm` script runnable in CI; documents how to add keys in `CONTRIBUTING.md`.
+---
 
-3. **Web: focus trap or visible focus ring on toolbar**  
-   Improve keyboard UX: all toolbar controls reachable with Tab; visible `:focus-visible` styles consistent with light/dark themes.  
-   *Acceptance:* short note in PR describing Tab order; no regressions in lint/build.
+### 1. ~~CLI: `check` for broken relative `.md` links~~ **Done**
 
-4. **Core: one extra `MarkdownPlugin` test for rehype stage**  
-   Add a tiny rehype plugin in `packages/core/src/plugins.test.ts` (e.g. add a `data-*` attribute on `p`) and assert it appears in `markdownToHtml` output before sanitize strips it—or extend sanitize schema in test only.  
-   *Acceptance:* test documents rehype hook order vs `rehype-sanitize`.
+Implemented: `inariwrite check <file.md>` via `listRelativeMarkdownFileLinks` in `@inariwrite/core`. See `apps/cli/src/check.ts` and tests.
 
-5. **Docs: translate `docs/plugins.md` section into Mongolian**  
-   Add `docs/plugins.mn.md` (or a bilingual section) explaining `MarkdownPlugin` for Mongolian-speaking contributors.  
-   *Acceptance:* link from main `docs/plugins.md` or README docs table.
+---
 
-Maintainers: replace `OWNER` links in `.github/ISSUE_TEMPLATE` when the repository URL is final.
+### 2. i18n: key parity audit
+
+**Idea:** Script or test that fails CI if `mn` and `en` keys in `packages/i18n/src/resources.ts` diverge.
+
+**Acceptance:** `pnpm` script runnable in CI; [CONTRIBUTING](../CONTRIBUTING.md) documents how to add keys.
+
+---
+
+### 3. Web: toolbar keyboard UX
+
+**Idea:** All toolbar controls reachable with **Tab**; consistent **`:focus-visible`** styles in light/dark.
+
+**Acceptance:** Short PR note on tab order; lint/build green.
+
+---
+
+### 4. Core: rehype-stage `MarkdownPlugin` test
+
+**Idea:** Tiny rehype plugin in `packages/core/src/plugins.test.ts` (e.g. add a `data-*` on `<p>`) and assert behavior vs **`markdownToHtml`** / **`rehype-sanitize`** order.
+
+**Acceptance:** Test documents rehype vs sanitize ordering.
+
+---
+
+### 5. ~~Docs: `plugins.md` in Mongolian~~ **Done**
+
+Shipped: [plugins.mn.md](plugins.mn.md), linked from [plugins.md](plugins.md) and [docs/README.md](README.md).
+
+---
+
+**Maintainers:** Replace `OWNER` in `.github/ISSUE_TEMPLATE` when the repo URL is final.

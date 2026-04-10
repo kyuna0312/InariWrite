@@ -68,5 +68,5 @@ export function MarkdownEditor({ value, onChange, theme, ariaLabel }: MarkdownEd
     });
   }, [value]);
 
-  return <div className="editor-mount" ref={parentRef} />;
+  return <div className="editor-mount min-h-0 min-w-0 flex-1" ref={parentRef} />;
 }

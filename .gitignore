@@ -11,3 +11,10 @@ test-results/
 playwright-report/
 blob-report/
 playwright/.cache/
+
+# Tauri (Rust)
+apps/desktop/src-tauri/target/
+
+# Capacitor native shells (generate with `pnpm mobile:add:android` / `mobile:add:ios`)
+apps/web/android/
+apps/web/ios/

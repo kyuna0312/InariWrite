@@ -1,74 +1,82 @@
 # Contributing to InariWrite
 
-Thank you for helping build InariWrite. This project values **clear scope**, **kind review**, and **small, reviewable PRs**.
+Thank you for helping build InariWrite. We value **clear scope**, **kind review**, and **small, reviewable PRs**.
 
 ## Before you start
 
-1. Read [docs/architecture.md](docs/architecture.md) and [docs/plugins.md](docs/plugins.md) for layers and the `MarkdownPlugin` API.
-2. Read [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
-3. Check [existing issues](https://github.com/OWNER/InariWrite/issues) or open one to discuss larger changes.
+1. **[docs/architecture.md](docs/architecture.md)** — layers and dependency rules.  
+2. **[docs/plugins.md](docs/plugins.md)** — `MarkdownPlugin` API.  
+3. **[CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)**.  
+4. **[docs/README.md](docs/README.md)** — full doc map (platforms, i18n, release, etc.).  
+5. Issues: check [existing issues](https://github.com/OWNER/InariWrite/issues) or open one for larger changes. Replace `OWNER` with the real org or username when the repo is public.
 
-Replace `OWNER` with the actual GitHub org or username when the repository is published.
+## Environment
 
-## Development
-
-Requires **Node.js 20+** and [pnpm](https://pnpm.io/) 9 (see root `packageManager` in `package.json`).
+- **Node.js 20+** and **pnpm 9** (root `packageManager` in `package.json`).  
+- Optional: **Rust** + system deps for [desktop (Tauri)](docs/platforms.md); not required for web/CLI work.
 
 ```bash
+corepack enable && corepack prepare pnpm@9.15.9 --activate   # if needed
 pnpm install
-pnpm dev          # Vite dev server (@inariwrite/web)
+```
+
+## Commands
+
+**Daily**
+
+```bash
+pnpm dev          # Vite — @inariwrite/web
 pnpm lint
 pnpm typecheck
 pnpm test
-pnpm build
-pnpm run budget   # gzip size caps on web dist (CI)
-pnpm run test:e2e # Playwright smoke; requires `pnpm build` first
-pnpm run audit    # high-severity threshold; matches CI
 ```
 
-After a build, you can run `node apps/cli/dist/index.js preview <file.md>` (`--watch` uses SSE with polling fallback; `--interval` for poll ms), `… build <file.md> -o <dir>`, or `… check <file.md>` to verify relative Markdown links. Optional **`--config`** and comma-separated **`--plugin`** load extra `MarkdownPlugin` modules (see [docs/plugins.md](docs/plugins.md)).
+**Before opening a PR** (matches CI)
 
-Use `corepack enable` then `corepack prepare pnpm@9.15.9 --activate` if you do not have pnpm installed globally.
+```bash
+pnpm build
+pnpm run budget      # web dist gzip caps
+pnpm run test:e2e    # needs pnpm build first
+pnpm run audit       # high severity; same threshold as CI
+```
+
+**CLI** (after `pnpm build`): `node apps/cli/dist/index.js preview|build|check|publish …` — see root [README](README.md#cli) and [optional-cloud.md](docs/optional-cloud.md), [plugins.md](docs/plugins.md).
+
+**Desktop / mobile** shells: [docs/platforms.md](docs/platforms.md).
 
 ## Pull requests
 
-- **One logical change per PR** when possible.
-- **Update or add tests** for behavior changes in `packages/core`, `apps/web`, `apps/cli`, or other touched packages.
-- **UI strings:** If you add user-visible text, update **both** `mn` and `en` in `packages/i18n/src/resources.ts`, or note in the PR that a follow-up translation issue is needed.
-- **Conventional Commits** are welcome (`feat:`, `fix:`, `docs:`) for clearer history and changelogs.
+- **One logical change** per PR when possible.  
+- **Tests** for behavior changes in touched packages (`packages/core`, `apps/web`, `apps/cli`, …).  
+- **UI copy:** update **both** `mn` and `en` in `packages/i18n/src/resources.ts`, or note a follow-up translation in the PR.  
+- **Conventional Commits** welcome (`feat:`, `fix:`, `docs:`).
 
 ## Good first contributions
 
-See [docs/good-first-issues.md](docs/good-first-issues.md) for copy-paste issue templates maintainers can label **`good first issue`**.
+See [docs/good-first-issues.md](docs/good-first-issues.md) for templates maintainers can label **good first issue**.
 
-- Documentation fixes and translations (Mongolian / English).
-- Tests for the markdown pipeline or editor behavior.
-- CLI subcommands that reuse `@inariwrite/core` (e.g. `check` for broken links).
-- Accessibility improvements in the web app (labels, focus, live regions for preview).
+- Docs, translations (MN / EN).  
+- Tests for the markdown pipeline or editor.  
+- CLI features built on `@inariwrite/core`.  
+- Web accessibility (labels, focus, live regions).
 
 ## Changesets and versioning
 
-Workspace packages use [Changesets](https://github.com/changesets/changesets). Before merging a PR that should appear in package changelogs, add a changeset:
+Workspace packages use [Changesets](https://github.com/changesets/changesets). For changelog-worthy changes:
 
 ```bash
 pnpm changeset
 ```
 
-To apply accumulated changesets and bump versions locally (maintainers):
-
-```bash
-pnpm version-packages
-```
-
-See [.changeset/README.md](.changeset/README.md). Automated `changeset publish` in CI can be added when packages are published to a registry (`NPM_TOKEN`).
+Maintainers bump locally with `pnpm version-packages`. See [.changeset/README.md](.changeset/README.md). Add `changeset publish` in CI when publishing to npm (`NPM_TOKEN`).
 
 ## Before going public
 
-Replace `OWNER` in issue templates, `CONTRIBUTING.md`, `SECURITY.md`, and related links with your GitHub org or username. Fill **`[INSERT SECURITY EMAIL]`** and **`[INSERT CONTACT EMAIL]`** in [SECURITY.md](SECURITY.md) and [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
+Replace `OWNER` in issue templates, this file, **SECURITY.md**, and related links. Fill **`[INSERT SECURITY EMAIL]`** and **`[INSERT CONTACT EMAIL]`** in **SECURITY.md** and **CODE_OF_CONDUCT.md**.
 
 ## Maintainer response time
 
-We aim for a **first response within several days**. If a PR stalls, a polite ping in the thread is welcome.
+We aim for a **first response within several days**. If a PR stalls, a polite ping is welcome.
 
 ## Security
 

@@ -1,38 +1,38 @@
 # Internationalization (i18n)
 
-InariWrite is **Mongolian-first** in spirit: the project home and community story emphasize Mongolia’s open-source ecosystem, while **English** is supported so global contributors can use and ship features without friction.
+**Doc index:** [README.md](README.md) · **Strings:** `packages/i18n/src/resources.ts`
+
+InariWrite is **Mongolian-first** in spirit: positioning emphasizes Mongolia’s open-source ecosystem; **English** is supported so global contributors can ship without friction.
 
 ## Principles
 
-1. **User-authored Markdown** is language-agnostic. Only **application chrome** (menus, buttons, errors, onboarding) is translated.
-2. Use **BCP 47** locale tags: start with `mn` and `en`. If you later need script-specific tags (e.g. Mongolian script considerations), validate **browser and font** behavior early.
-3. **Default UI locale:** `mn` where the product team agrees it makes sense; always provide a clear way to switch to `en` (and document it).
+| # | Guideline |
+|---|-----------|
+| 1 | **User Markdown** is language-agnostic. Only **app chrome** (menus, buttons, errors, onboarding) is translated. |
+| 2 | Use **BCP 47** tags; today **`mn`** and **`en`**. If you add script-specific tags later, validate **fonts and layout** in real browsers early. |
+| 3 | **Default locale `mn`** where the team agrees; always expose a clear switch to **`en`** (and document it). |
 
-## Suggested libraries
+## Implementation (today)
 
-- **i18next** + **react-i18next** for the web app, **or**
-- **FormatJS** if the team prefers ICU messages everywhere
-
-UI strings live in **`@inariwrite/i18n`** (`packages/i18n/src/resources.ts`), exported as `mn`, `en`, and `resources` for `i18next`. Add keys there for both locales when you change the chrome.
+- **Web:** **i18next** + **react-i18next** (`apps/web`).  
+- **Catalog:** **`@inariwrite/i18n`** — `packages/i18n/src/resources.ts` exports `mn`, `en`, and `resources` for `i18next.init`.  
+- **Alternative:** FormatJS/ICU if the project ever standardizes on ICU messages.
 
 ## Contributor workflow
 
-- Adding a string: update **both** `mn.json` and `en.json`, or open a follow-up issue labeled `i18n`.
-- PR template reminder: “UI change → locales updated?”
-- At scale: connect **Weblate** or **Crowdin**; not required on day one.
+- **New or changed UI string:** update **both** `mn` and `en` in **`resources.ts`**, or open a follow-up labeled **`i18n`**.  
+- PRs: remind “chrome changed → locales updated?” (see [CONTRIBUTING](../CONTRIBUTING.md)).  
+- At scale: Weblate/Crowdin—optional.
 
 ## Documentation languages
 
-- **Docs site:** routes or prefixes like `/mn/` and `/en/`.
-- Mongolian pages do not need to mirror English 1:1 initially; prioritize clarity for the primary audience you choose per page.
+- A future docs site might use **`/mn/`** and **`/en/`** routes.  
+- Mongolian pages need not mirror English 1:1; optimize clarity per audience.
 
 ## Mongolian script and UX
 
-Traditional Mongolian script has **layout and font** constraints in browsers. If you target vertical script or mixed layouts:
-
-- Test on **Chrome, Firefox, Safari** with real content early.
-- File dedicated issues for **font stack** and **CSS** (e.g. `writing-mode`) rather than bolting fixes into unrelated PRs.
+Traditional Mongolian script has **font and layout** constraints. If you target vertical or mixed layouts: test **Chrome, Firefox, Safari** with real content; track **font stack** and **CSS** (`writing-mode`, etc.) in dedicated issues—not unrelated PRs.
 
 ## CLI
 
-- Reuse the same message catalogs or a thin Node loader so CLI errors and help text stay consistent with the web app.
+Reuse the same catalogs (or a thin Node loader) so CLI messages stay aligned with the web app.

@@ -24,9 +24,24 @@ const rules = [
     maxGzip: 220 * 1024,
   },
   {
-    label: "Markdown editor chunk JS",
+    label: "Markdown editor lazy entry JS",
     test: (n) => /^MarkdownEditor-[^/]+\.js$/.test(n),
+    maxGzip: 8 * 1024,
+  },
+  {
+    label: "CodeMirror vendor JS",
+    test: (n) => /^codemirror-vendor-[^/]+\.js$/.test(n),
     maxGzip: 300 * 1024,
+  },
+  {
+    label: "React vendor JS",
+    test: (n) => /^react-vendor-[^/]+\.js$/.test(n),
+    maxGzip: 95 * 1024,
+  },
+  {
+    label: "i18n vendor JS",
+    test: (n) => /^i18n-vendor-[^/]+\.js$/.test(n),
+    maxGzip: 28 * 1024,
   },
   {
     label: "preview worker JS",

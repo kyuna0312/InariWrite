@@ -20,3 +20,5 @@ We will acknowledge receipt when possible and coordinate a fix and disclosure ti
 ## Scope
 
 In scope: the InariWrite repositories, official release artifacts, and documented extension points. Out of scope: third-party plugins unless they ship in this monorepo by default.
+
+**Optional cloud:** The default editor and CLI do not include sync, auth, or AI backends. If you deploy or use **separate** services alongside InariWrite, report vulnerabilities for those deployments to the **operator** of that service unless the issue is in our published client code. Design notes: [docs/optional-cloud.md](docs/optional-cloud.md).

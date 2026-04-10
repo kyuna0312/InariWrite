@@ -12,15 +12,20 @@ export function readStoredTheme(): Theme {
   return "light";
 }
 
+function syncDomTheme(theme: Theme): void {
+  document.documentElement.dataset.theme = theme;
+  document.documentElement.classList.toggle("dark", theme === "dark");
+}
+
 export function persistTheme(theme: Theme): void {
   try {
     localStorage.setItem(STORAGE_KEY, theme);
   } catch {
     //
   }
-  document.documentElement.dataset.theme = theme;
+  syncDomTheme(theme);
 }
 
 export function applyTheme(theme: Theme): void {
-  document.documentElement.dataset.theme = theme;
+  syncDomTheme(theme);
 }

@@ -1,67 +1,62 @@
 # Open source strategy and branding
 
-How InariWrite stays healthy as a project and visible as a **Mongolian open-source initiative** without closing the door to global contributors.
+**Doc index:** [README.md](README.md) · **Contributing:** [CONTRIBUTING](../CONTRIBUTING.md)
+
+How InariWrite stays healthy as a project and visible as a **Mongolian open-source initiative** while welcoming global contributors.
 
 ## License
 
-**Current choice: [MIT](../LICENSE)**
+**Current: [MIT](../LICENSE)** — maximizes adoption and embedding with low friction.
 
-- Maximizes **adoption** and corporate use with minimal friction.
-- Fits libraries and editor cores that others may embed.
+**If you ever reconsider:** **MPL-2.0** (file-level copyleft, still combinable in many cases). License changes need a **maintainer decision** and a clear migration note.
 
-**Alternative to document if you ever change strategy:** **MPL-2.0** — file-level copyleft that still allows proprietary combinations in many cases; sometimes easier for companies than strong GPL.
+## Governance (light)
 
-If the license changes, it requires **maintainer decision** and a clear migration note; avoid churn.
+- **`MAINTAINERS.md`** when multiple people merge and release.  
+- **Semver** for published packages.  
+- **RFCs** or **`docs/adr/`** for large calls (plugin ABI, sync protocol).
 
-## Governance (lightweight)
+## Channels
 
-- **MAINTAINERS.md** (add when you have multiple maintainers): who can merge, who cuts releases.
-- **Semantic versioning** for published packages.
-- **RFCs** or **`docs/adr/`** for large decisions (plugin ABI, sync protocol).
-
-## Community channels
-
-| Channel | Use |
+| Channel | For |
 |---------|-----|
-| **GitHub Issues** | Tracked work, bugs, small features |
+| **GitHub Issues** | Bugs, tracked work, small features |
 | **GitHub Discussions** | Ideas, Q&A, show-and-tell |
-| **Pull requests** | Code review; keep scope reviewable |
+| **Pull requests** | Review; keep diffs small |
 
-Add **Discord or Matrix** only when someone can **moderate** regularly; until then, Discussions reduces fragmentation.
+Add **Discord/Matrix** only with **active moderation**; until then, Discussions reduces fragmentation.
 
-## Contribution experience
+## Contributor experience
 
-- **CONTRIBUTING.md** with exact commands (`pnpm install`, `pnpm test`, …).
-- Label **`good first issue`** with **acceptance criteria** and file hints.
-- **Conventional Commits** optional; helps automated changelogs.
-- **Monthly changelog** or release post (Discussion or blog): low effort, high signal.
+- **[CONTRIBUTING](../CONTRIBUTING.md)** with exact commands.  
+- **`good first issue`** + clear acceptance criteria ([good-first-issues.md](good-first-issues.md)).  
+- **Conventional Commits** optional; helps automated changelogs.  
+- **Monthly changelog** or release post: low effort, high signal.
 
 ## Security and maintenance
 
-- **SECURITY.md** with GitHub private advisories or a dedicated email.
-- **Dependabot** (or Renovate) + `pnpm audit` in CI where appropriate.
-- Pin critical actions in GitHub workflows for supply-chain hygiene.
+- **[SECURITY.md](../SECURITY.md)** — advisories or dedicated email.  
+- **Dependabot** + **`pnpm audit`** in CI where appropriate.  
+- Pin critical **GitHub Actions** revisions.
 
-## Branding as a Mongolian developer ecosystem project
+## Branding (Mongolian ecosystem)
 
-Concrete, repeatable moves:
-
-1. **README hero:** Bilingual tagline (MN + EN) stating the Mongolian open-source angle, as in the main README.
-2. **Explicit welcome:** English text that says global contributors are wanted; Mongolian text that anchors local identity.
-3. **Local community:** Reach Mongolian dev groups, meetups, universities; offer a **“first PR in 90 minutes”** workshop using a labeled good-first-issue.
-4. **Talks:** One short slide deck: problem → architecture → how to contribute; submit to regional events.
-5. **Partnerships:** Co-marketing with other MN OSS projects (mutual README links, shared office hours).
-6. **Assets:** Simple logo + wordmark; consistent colors in the web app and docs.
+1. **README:** Bilingual hero (MN + EN) stating the Mongolian OSS angle.  
+2. **Welcome:** EN invites global contributors; MN anchors local identity.  
+3. **Local outreach:** Dev groups, meetups, universities; e.g. **“first PR in 90 minutes”** using a labeled good-first-issue.  
+4. **Talks:** Short deck: problem → architecture → contribute.  
+5. **Partnerships:** Cross-links and office hours with other MN OSS projects.  
+6. **Assets:** Logo + wordmark; align with web app colors.
 
 ## npm and plugins
 
-- Scope: **`@inariwrite/*`** for official packages.
-- Community plugins: encourage **`inariwrite-plugin-*`** on npm and a **curated list** in docs (not necessarily in-repo).
+- Official scope: **`@inariwrite/*`**.  
+- Community: encourage **`inariwrite-plugin-*`** on npm and a **curated list** (may live outside this repo).
 
-## Metrics that matter early
+## Metrics (early)
 
-- Time to **green CI** for a new contributor
-- Number of **external contributors** and **closed good-first-issues**
-- **Issue response** time (set honest expectations in CONTRIBUTING)
+- Time to **green CI** for a new contributor.  
+- **External contributors** and **closed good-first-issues**.  
+- **Issue response** time (set expectations in CONTRIBUTING).
 
-Avoid optimizing only for stars; prioritize **repeat contributors** and **real issues closed**.
+Prioritize **repeat contributors** and **closed real issues** over stars alone.

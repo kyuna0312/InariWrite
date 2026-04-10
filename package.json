@@ -8,6 +8,11 @@
   },
   "scripts": {
     "dev": "turbo run dev",
+    "desktop:dev": "pnpm --filter @inariwrite/desktop run tauri:dev",
+    "desktop:build": "pnpm --filter @inariwrite/desktop run tauri:build",
+    "mobile:sync": "pnpm --filter @inariwrite/web run mobile:sync",
+    "mobile:add:android": "pnpm --filter @inariwrite/web exec cap add android",
+    "mobile:add:ios": "pnpm --filter @inariwrite/web exec cap add ios",
     "build": "turbo run build",
     "test": "turbo run test",
     "test:e2e": "turbo run test:e2e",

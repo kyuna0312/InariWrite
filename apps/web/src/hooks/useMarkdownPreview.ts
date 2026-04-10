@@ -1,6 +1,6 @@
 import { markdownToHtml } from "@inariwrite/core";
 import { sampleMarkdownPlugin } from "@inariwrite/plugin-sample";
-import { useEffect, useState } from "react";
+import { startTransition, useEffect, useState } from "react";
 
 const DEBOUNCE_MS = 120;
 /** If the worker never responds (path/SW issues), fall back to the main thread. */
@@ -36,14 +36,18 @@ export function useMarkdownPreview(markdown: string): { html: string; error: str
       void markdownToHtml(markdown, { plugins: PREVIEW_PLUGINS })
         .then((out: string) => {
           if (!cancelled) {
-            setHtml(out);
-            setError(null);
+            startTransition(() => {
+              setHtml(out);
+              setError(null);
+            });
           }
         })
         .catch(() => {
           if (!cancelled) {
-            setHtml("");
-            setError("preview.error");
+            startTransition(() => {
+              setHtml("");
+              setError("preview.error");
+            });
           }
         });
     };
@@ -58,11 +62,15 @@ export function useMarkdownPreview(markdown: string): { html: string; error: str
           settled = true;
           if (fallbackTimer !== undefined) window.clearTimeout(fallbackTimer);
           if (ev.data.ok && typeof ev.data.html === "string") {
-            setHtml(ev.data.html);
-            setError(null);
+            startTransition(() => {
+              setHtml(ev.data.html as string);
+              setError(null);
+            });
           } else {
-            setHtml("");
-            setError("preview.error");
+            startTransition(() => {
+              setHtml("");
+              setError("preview.error");
+            });
           }
         };
         worker.addEventListener("message", messageHandler);
