@@ -28,7 +28,7 @@
     "@inariwrite/plugin-sample": "workspace:*",
     "i18next": "^24.2.0",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1",
+    "react-dom": "^19.2.5",
     "react-i18next": "^15.2.0"
   },
   "devDependencies": {
@@ -39,7 +39,7 @@
     "@playwright/test": "^1.49.1",
     "@tailwindcss/vite": "^4.2.2",
     "@types/react": "^18.3.18",
-    "@types/react-dom": "^18.3.5",
+    "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^4.3.4",
     "cross-env": "^7.0.3",
     "tailwindcss": "^4.2.2",
